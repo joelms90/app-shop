@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" href="{{asset('/img/favicon.png')}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <title>Sign up</title>
+    <title>@yield('title','Tienda Virtual')</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
 
@@ -18,7 +18,7 @@
     <!-- CSS Files -->
     <link href="{{asset('/css/bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{asset('/css/material-kit.css')}}" rel="stylesheet"/>
-
+    @yield('styles')
 </head>
 
 <body class="@yield('body-class')">
@@ -41,22 +41,38 @@
                             <li><a class="nav-link" href="{{ route('login') }}">{{ __('Ingresa') }}</a></li>
                             <li><a class="nav-link" href="{{ route('register') }}">{{ __('Registrate') }}</a></li>
                         @else
+
+
+
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
+                                    <ul class="dropdown-menu">
+                                    <li>    
+                                    <a href=" {{(url('/home'))}}  ">Panel</a>
+                                    </li>
+                                    
+                               
+                                    @if(auth()->user()->admin)
+                                    <li>    
+                                    <a href=" {{(url('/admin/products'))}}  ">Gestionar productos</a>
+                                    </li>
+                                    @endif                      
+                          
 
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                     <li>
+                                
+                                    <a  href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Cerrar Sesión') }}
                                     </a>
-
+                                    </li>
+                                    </ul>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-                                </div>
                             </li>
                         @endguest
 <!--                     <li>
